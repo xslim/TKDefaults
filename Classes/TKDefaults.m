@@ -274,8 +274,13 @@ static BOOL initializedOnWindowDidBecomeKey;
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     nc.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    UIViewController *rootVC = [[UIApplication sharedApplication].keyWindow rootViewController];
-    [rootVC presentViewController:nc animated:YES completion:nil];
+    UIViewController *topController = [[UIApplication sharedApplication].keyWindow rootViewController];
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    [topController presentViewController:nc animated:YES completion:nil];
 }
 
 + (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController *)sender

@@ -18,6 +18,13 @@
     #import <BloodMagic/BMInitializer+LazyInitializer.h>
 #endif
 
+#ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
+    #define MR_SHORTHAND
+    #import "CoreData+MagicalRecord.h"
+#endif
+
+#import "TKDExtentions.h"
+
 @interface TKDefaults : NSObject
 
 //+ (void)inject;

@@ -15,10 +15,11 @@
 #define TKDLocalizedPluralString(count, singular, comment) [NSString stringWithFormat:[[TKDefaults currentLanguageBundle] localizedStringForKey:TTTLocalizedPluralStringKeyForCountAndSingularNoun(count, singular) value:@"" table:nil], count]
 #endif
 
-#undef NSLog
+
 #ifdef COCOAPODS_POD_AVAILABLE_NBULog
-    #import "NBULog.h"
-    #ifdef DEBUG
-        #define NSLog(fmt, ...) NBULogInfo(fmt,  ##__VA_ARGS__)
-    #endif
+  #undef NSLog
+  #import "NBULog.h"
+  #ifdef DEBUG
+    #define NSLog(fmt, ...) NBULogInfo(fmt,  ##__VA_ARGS__)
+  #endif
 #endif
