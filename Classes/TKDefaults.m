@@ -97,6 +97,9 @@ static NSDictionary *tkDefaultsConfig;
 {
 #ifdef COCOAPODS_POD_AVAILABLE_Pixate
     NSString *fileName = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDThemeCSSFileName"];
+    if (fileName.length == 0) {
+        return;
+    }
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
     [Pixate styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
     [Pixate updateStylesForAllViews];
