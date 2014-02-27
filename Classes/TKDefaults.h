@@ -13,17 +13,13 @@
     #import <ReactiveCocoa/RACEXTScope.h>
 #endif
 
-#ifdef COCOAPODS_POD_AVAILABLE_BloodMagic
-    #import <BloodMagic/BMLazy.h>
-    #import <BloodMagic/BMInitializer+LazyInitializer.h>
-#endif
-
 #ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
     #define MR_SHORTHAND
     #import "CoreData+MagicalRecord.h"
 #endif
 
 #import "TKDExtentions.h"
+#import "UIView+TKDStyling.h"
 
 @interface TKDefaults : NSObject
 
@@ -47,7 +43,6 @@
 extern const NSString *TKDUserKey;
 extern const NSString *TKDKeyKey;
 
-extern const NSString *TKDPixateKey;
 extern const NSString *TKDTestFlightKey;
 extern const NSString *TKDGoogleAnalyticsKey;
 

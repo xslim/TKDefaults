@@ -7,18 +7,22 @@
 #import "TKDefaults.h"
 #import <objc/runtime.h>
 
-#ifdef COCOAPODS_POD_AVAILABLE_Pixate
-    #import <Pixate/Pixate.h>
-#endif
-
 #ifdef COCOAPODS_POD_AVAILABLE_InAppSettingsKit
     #import <InAppSettingsKit/IASKAppSettingsViewController.h>
     #import <InAppSettingsKit/IASKSettingsReader.h>
 #endif
 #import "TKDSettingsViewController.h"
 
+#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+#import <PixateFreestyle/PixateFreestyle.h>
+#endif
+
 #ifdef COCOAPODS_POD_AVAILABLE_DCIntrospect
-    #import <DCIntrospect.h>
+#if TARGET_IPHONE_SIMULATOR
+#ifdef DEBUG
+    //#import <DCIntrospect.h>
+#endif
+#endif
 #endif
 
 //void runOnMainQueueWithoutDeadlocking(void (^block)(void))
@@ -88,9 +92,9 @@ static NSDictionary *tkDefaultsConfig;
         return;
     }
     
-    if ([note.object isEqualToString:@"TKDThemeCSSFileName"]) {
-        [self reloadAppTheme];
-    }
+//    if ([note.object isEqualToString:@"TKDThemeCSSFileName"]) {
+//        [self reloadAppTheme];
+//    }
 }
 
 + (void)reloadAppTheme
@@ -103,6 +107,13 @@ static NSDictionary *tkDefaultsConfig;
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
     [Pixate styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
     [Pixate updateStylesForAllViews];
+
+#endif
+#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+//    NSString *fileName = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDThemeCSSFileName"];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+//    [PixateFreestyle styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
+//    [PixateFreestyle updateStylesForAllViews];
 #endif
 }
 
@@ -117,17 +128,19 @@ static BOOL initializedOnWindowDidBecomeKey;
     
 #ifdef COCOAPODS_POD_AVAILABLE_DCIntrospect
 #if TARGET_IPHONE_SIMULATOR
-    [[DCIntrospect sharedIntrospector] start];
+#ifdef DEBUG
+    //[[DCIntrospect sharedIntrospector] start];
+#endif
 #endif
 #endif
     
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    if (!window) return;
+    //UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    //if (!window) return;
         
     
-#ifdef COCOAPODS_POD_AVAILABLE_Pixate
-    window.styleMode = PXStylingNormal;
-    [self reloadAppTheme];
+#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+    //window.styleMode = PXStylingNormal;
+    //[self reloadAppTheme];
 #endif
     
     // Remove notification
@@ -145,9 +158,8 @@ static BOOL initializedOnWindowDidBecomeKey;
 
 + (void)loadInMain
 {
-#ifdef COCOAPODS_POD_AVAILABLE_Pixate
-    NSDictionary *d = [self config][TKDPixateKey];
-    [Pixate licenseKey:d[TKDKeyKey] forUser:d[TKDUserKey]];
+#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+    [PixateFreestyle initializePixateFreestyle];
 #endif
 }
 
@@ -322,7 +334,6 @@ static NSDictionary *tkDefaultsConfig;
 extern const NSString *TKDUserKey;
 extern const NSString *TKDKeyKey;
 
-extern const NSString *TKDPixateKey;
 extern const NSString *TKDTestFlightKey;
 extern const NSString *TKDGoogleAnalyticsKey;
 
@@ -330,7 +341,6 @@ extern const NSString *TKDGoogleAnalyticsKey;
 const NSString *TKDUserKey = @"TKDUserKey";
 const NSString *TKDKeyKey = @"TKDKeyKey";
 
-const NSString *TKDPixateKey = @"TKDPixateKey";
 const NSString *TKDTestFlightKey = @"TKDTestFlightKey";
 const NSString *TKDGoogleAnalyticsKey = @"TKDGoogleAnalyticsKey";
 

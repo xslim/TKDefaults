@@ -14,7 +14,7 @@
 static NSString *currentDisplayedError = nil;
 + (void)showError:(NSError *)error
 {
-    NSString *errorDescription = [error localizedDescription];
+    NSString *errorDescription = (error) ? [error localizedDescription] : nil;
     [SVProgressHUD showErrorWithStatus:errorDescription];
 }
 
