@@ -38,7 +38,7 @@ static NSString *currentDisplayedError = nil;
 #endif
 
 @implementation UIStoryboard (TKDExtentions)
-+ (UIViewController *)instantiateViewControllerWithIdentifier:(NSString *)identifier inStoryboardWithName:(NSString *)storyboardName
++ (id)instantiateViewControllerWithIdentifier:(NSString *)identifier inStoryboardWithName:(NSString *)storyboardName
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:nil];
     return [storyboard instantiateViewControllerWithIdentifier:identifier];
