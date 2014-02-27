@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 #ifdef COCOAPODS_POD_AVAILABLE_SVProgressHUD
 #import "SVProgressHUD.h"
@@ -14,3 +15,7 @@
 + (void)showError:(NSError *)error;
 @end
 #endif
+
+@interface UIStoryboard (TKDExtentions)
++ (UIViewController *)instantiateViewControllerWithIdentifier:(NSString *)identifier inStoryboardWithName:(NSString *)storyboardName;
+@end
