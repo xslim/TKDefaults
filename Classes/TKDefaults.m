@@ -83,6 +83,10 @@ static NSDictionary *tkDefaultsConfig;
     [nc addObserver:[self class] selector:@selector(appSettingsChangedNotification:) name:kIASKAppSettingChanged object:nil];
 #endif
     
+#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+    [PixateFreestyle initializePixateFreestyle];
+#endif
+    
 }
 
 + (void)appSettingsChangedNotification:(NSNotification *)note
@@ -158,9 +162,7 @@ static BOOL initializedOnWindowDidBecomeKey;
 
 + (void)loadInMain
 {
-#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
-    [PixateFreestyle initializePixateFreestyle];
-#endif
+
 }
 
 #pragma mark - Usefull getters

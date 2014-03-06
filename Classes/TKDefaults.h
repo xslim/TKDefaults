@@ -23,7 +23,7 @@
 
 @interface TKDefaults : NSObject
 
-//+ (void)inject;
++ (void)inject;
 + (void)configureWithParameters:(NSDictionary *)params;
 
 + (void)loadInMain;
