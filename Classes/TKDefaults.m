@@ -13,10 +13,6 @@
 #endif
 #import "TKDSettingsViewController.h"
 
-#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
-#import <PixateFreestyle/PixateFreestyle.h>
-#endif
-
 #ifdef COCOAPODS_POD_AVAILABLE_DCIntrospect
 #if TARGET_IPHONE_SIMULATOR
 #ifdef DEBUG
@@ -79,13 +75,10 @@ static NSDictionary *tkDefaultsConfig;
     [self initializeSettings];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //[nc addObserver:[self class] selector:@selector(reloadAppTheme) name:kIASKAppSettingChanged object:@"TKDThemeCSSFileName"];
     [nc addObserver:[self class] selector:@selector(appSettingsChangedNotification:) name:kIASKAppSettingChanged object:nil];
 #endif
     
-#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
-    [PixateFreestyle initializePixateFreestyle];
-#endif
+
     
 }
 
@@ -96,30 +89,27 @@ static NSDictionary *tkDefaultsConfig;
         return;
     }
     
-//    if ([note.object isEqualToString:@"TKDThemeCSSFileName"]) {
-//        [self reloadAppTheme];
-//    }
 }
 
-+ (void)reloadAppTheme
-{
-#ifdef COCOAPODS_POD_AVAILABLE_Pixate
-    NSString *fileName = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDThemeCSSFileName"];
-    if (fileName.length == 0) {
-        return;
-    }
-    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-    [Pixate styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
-    [Pixate updateStylesForAllViews];
-
-#endif
-#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+//+ (void)reloadAppTheme
+//{
+//#ifdef COCOAPODS_POD_AVAILABLE_Pixate
 //    NSString *fileName = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDThemeCSSFileName"];
+//    if (fileName.length == 0) {
+//        return;
+//    }
 //    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-//    [PixateFreestyle styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
-//    [PixateFreestyle updateStylesForAllViews];
-#endif
-}
+//    [Pixate styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
+//    [Pixate updateStylesForAllViews];
+//
+//#endif
+//#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
+////    NSString *fileName = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDThemeCSSFileName"];
+////    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+////    [PixateFreestyle styleSheetFromFilePath:path withOrigin:PXStylesheetOriginApplication];
+////    [PixateFreestyle updateStylesForAllViews];
+//#endif
+//}
 
 static BOOL initializedOnWindowDidBecomeKey;
 + (void)windowDidBecomeKeyNotification:(NSNotification *)notification
@@ -141,11 +131,6 @@ static BOOL initializedOnWindowDidBecomeKey;
     //UIWindow *window = [UIApplication sharedApplication].keyWindow;
     //if (!window) return;
         
-    
-#ifdef COCOAPODS_POD_AVAILABLE_PixateFreestyle
-    //window.styleMode = PXStylingNormal;
-    //[self reloadAppTheme];
-#endif
     
     // Remove notification
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];

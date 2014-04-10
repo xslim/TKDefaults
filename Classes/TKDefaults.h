@@ -36,8 +36,6 @@
 + (NSString *)appVersion;
 + (NSBundle *)currentLanguageBundle;
 
-+ (void)reloadAppTheme;
-
 @end
 
 extern const NSString *TKDUserKey;
