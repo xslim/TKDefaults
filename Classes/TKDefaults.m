@@ -40,6 +40,24 @@
 
 @end
 
+@implementation NSUserDefaults (KeyPath)
+- (void)tk_setBool:(BOOL)value forKeyPath:(NSString *)keyPath
+{
+    NSArray *components = [keyPath componentsSeparatedByString:@"."];
+    if (components.count == 2) {
+        NSString *key = components[0];
+        NSString *key2 = components[1];
+        
+        NSMutableDictionary *d = [[self objectForKey:key] mutableCopy];
+        if (!d) d = NSMutableDictionary.new;
+        d[key2] = @(value);
+        [self setObject:d forKey:key];
+    } else {
+        [self setBool:value forKey:keyPath];
+    }
+}
+@end
+
 @implementation TKDefaults
 
 static NSDictionary *tkDefaultsConfig;
@@ -251,7 +269,14 @@ static BOOL initializedOnWindowDidBecomeKey;
                     
                     // update preference value with default value if necessary
                     if (key && value == nil) {
-                        [defaults setObject:defaultValue forKey:key];
+                        
+                        if ([type isEqualToString:kIASKPSToggleSwitchSpecifier]) {
+                            [defaults tk_setBool:[defaultValue boolValue] forKeyPath:key];
+                        } else {
+                            [defaults setObject:defaultValue forKey:key];
+                        }
+                        
+                        
                     }
                 }
             }

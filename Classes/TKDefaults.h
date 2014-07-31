@@ -18,7 +18,6 @@
     #import "CoreData+MagicalRecord.h"
 #endif
 
-#import "TKDExtentions.h"
 #import "UIView+TKDStyling.h"
 
 @interface TKDefaults : NSObject
